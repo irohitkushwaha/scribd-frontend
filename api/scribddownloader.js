@@ -5,7 +5,7 @@
 // During development, this will likely be http://localhost:3001.
 // In production, you would change this to your actual domain name.
 // const BASE_URL = 'http://localhost:3001';
-const BASE_URL = 'https://scribd.rohitkushwaha.com';
+const BASE_URL = 'https://api-scribd.rohitkushwaha.com';
 
 
 /**
