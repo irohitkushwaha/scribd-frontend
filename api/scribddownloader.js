@@ -4,7 +4,7 @@
 // The base URL of your backend server.
 // During development, this will likely be http://localhost:3001.
 // In production, you would change this to your actual domain name.
-// const BASE_URL = 'http://localhost:3001';
+// const BASE_URL = 'http://localhost:4009';
 const BASE_URL = 'https://api-scribd.rohitkushwaha.com';
 
 
@@ -35,6 +35,32 @@ export const processScribdUrl = async (url) => {
 
     } catch (error) {
         console.error('Error processing URL:', error);
+        // Re-throw the error so the UI component can catch it and display a message.
+        throw error;
+    }
+};
+
+export const getPageCount = async (url) => {
+    try {
+        const response = await fetch(`${BASE_URL}/api/get-page-count`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: url }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            // If the server returns an error (e.g., 400 or 500), throw an error.
+            throw new Error(data.message || 'An unknown error occurred on the server.');
+        }
+
+        return data; // Expected to be { success: true, downloadUrl: '...', title: '...' }
+
+    } catch (error) {
+        console.error('Error getting page count:', error);
         // Re-throw the error so the UI component can catch it and display a message.
         throw error;
     }
